@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cat Breed Classifier</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="name">Cat Breed Classifier</h1>
+            <p class="title">Interactive Machine Learning Model</p>
+        </header>
+
+        <!-- Main Inference Area -->
+        <section class="section inference-section">
+            <div id="inference-placeholder" class="inference-placeholder">
+                <p>Select a cat from the grid below</p>
+            </div>
+            <div id="inference-results" class="inference-results" style="display: none;">
+                <div class="selected-image-container">
+                    <img id="selectedImage" alt="Selected cat image" class="selected-image">
+                </div>
+                <div class="predictions-container">
+                    <h3 class="prediction-title">Model Predictions</h3>
+                    <div id="predictionsList" class="predictions-list">
+                        <!-- Predictions will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sample Images Grid -->
+        <section class="section">
+            <h2 class="section-title">Sample Images</h2>
+            <div class="compact-image-grid" id="imageGrid">
+                <!-- Images will be populated by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Cat breeds and sample data (using available images)
+        const breeds = [
+            'Abyssinian', 'Bengal', 'Birman', 'Bombay', 'Persian', 'Ragdoll', 'Siamese', 'Sphynx'
+        ];
+
+        // All 36 sample images for 4x9 grid
+        const sampleImages = [
+            'Abyssinian_1.jpg', 'Abyssinian_2.jpg', 'Abyssinian_3.jpg', 'Abyssinian_4.jpg', 'Abyssinian_5.jpg',
+            'Bengal_1.jpg', 'Bengal_2.jpg', 'Bengal_3.jpg', 'Bengal_4.jpg', 'Bengal_5.jpg',
+            'Birman_1.jpg', 'Birman_2.jpg', 'Birman_3.jpg', 'Birman_4.jpg', 'Birman_5.jpg',
+            'Bombay_1.jpg', 'Bombay_2.jpg', 'Bombay_3.jpg', 'Bombay_4.jpg', 'Bombay_5.jpg',
+            'Persian_1.jpg', 'Persian_2.jpg', 'Persian_3.jpg', 'Persian_4.jpg', 'Persian_5.jpg',
+            'Ragdoll_1.jpg', 'Ragdoll_2.jpg', 'Ragdoll_3.jpg', 'Ragdoll_4.jpg', 'Ragdoll_5.jpg',
+            'Siamese_5.jpg', 'Sphynx_1.jpg', 'Sphynx_2.jpg', 'Sphynx_3.jpg', 'Sphynx_4.jpg', 'Sphynx_5.jpg'
+        ];
+
+        // Simulate ML model predictions
+        function generatePredictions(imageName) {
+            const actualBreed = imageName.split('_')[0];
+            const predictions = {};
+
+            // Generate realistic predictions
+            breeds.forEach(breed => {
+                if (breed === actualBreed) {
+                    // High confidence for correct breed (85-95%)
+                    predictions[breed] = 0.85 + Math.random() * 0.10;
+                } else {
+                    // Lower confidence for other breeds
+                    predictions[breed] = Math.random() * 0.15;
+                }
+            });
+
+            // Normalize predictions to sum to 1
+            const total = Object.values(predictions).reduce((a, b) => a + b, 0);
+            Object.keys(predictions).forEach(breed => {
+                predictions[breed] = predictions[breed] / total;
+            });
+
+            // Sort by confidence
+            return Object.entries(predictions)
+                .sort(([,a], [,b]) => b - a)
+                .map(([breed, confidence]) => ({breed, confidence}));
+        }
+
+        // Create compact image grid
+        function createImageGrid() {
+            const grid = document.getElementById('imageGrid');
+
+            sampleImages.forEach(imageName => {
+                const imageContainer = document.createElement('div');
+                imageContainer.className = 'compact-image-item';
+
+                const img = document.createElement('img');
+                img.src = `assets/ml-samples/${imageName}`;
+                img.alt = imageName.split('_')[0];
+                img.className = 'compact-sample-image';
+                img.onclick = () => classifyImage(imageName, img.src);
+
+                imageContainer.appendChild(img);
+                grid.appendChild(imageContainer);
+            });
+        }
+
+        // Classify selected image
+        function classifyImage(imageName, imageSrc) {
+            const predictions = generatePredictions(imageName);
+            const actualBreed = imageName.split('_')[0];
+
+            // Hide placeholder and show results
+            document.getElementById('inference-placeholder').style.display = 'none';
+            document.getElementById('inference-results').style.display = 'block';
+
+            // Show selected image
+            const selectedImg = document.getElementById('selectedImage');
+            selectedImg.src = imageSrc;
+            selectedImg.alt = imageName;
+
+            // Show predictions with actual answer highlight
+            const predictionsList = document.getElementById('predictionsList');
+            predictionsList.innerHTML = '';
+
+            // Add actual answer indicator first
+            const actualAnswer = document.createElement('div');
+            actualAnswer.className = 'actual-answer';
+            actualAnswer.innerHTML = `<strong>Actual Breed: ${actualBreed}</strong>`;
+            predictionsList.appendChild(actualAnswer);
+
+            predictions.forEach((prediction, index) => {
+                const predictionItem = document.createElement('div');
+                predictionItem.className = 'prediction-item';
+
+                // Highlight if this is the correct answer
+                if (prediction.breed === actualBreed) {
+                    predictionItem.classList.add('correct-answer');
+                }
+
+                const breed = document.createElement('span');
+                breed.className = 'breed-name';
+                breed.textContent = prediction.breed;
+
+                const confidence = document.createElement('span');
+                confidence.className = 'confidence-score';
+                confidence.textContent = `${(prediction.confidence * 100).toFixed(1)}%`;
+
+                const bar = document.createElement('div');
+                bar.className = 'confidence-bar';
+                const fill = document.createElement('div');
+                fill.className = 'confidence-fill';
+                fill.style.width = `${prediction.confidence * 100}%`;
+                bar.appendChild(fill);
+
+                predictionItem.appendChild(breed);
+                predictionItem.appendChild(confidence);
+                predictionItem.appendChild(bar);
+                predictionsList.appendChild(predictionItem);
+            });
+        }
+
+        // Dark mode functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+
+            // Initialize image grid
+            createImageGrid();
+        });
+    </script>
+</body>
+</html>

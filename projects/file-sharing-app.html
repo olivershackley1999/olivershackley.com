@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing App</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="name">File Sharing App</h1>
+            <p class="title">Local & Remote File Access Without Cloud Services</p>
+        </header>
+
+        <!-- Project Content -->
+        <section class="section">
+            <div class="project-content">
+                <p>A lightweight Python tool to access computer files from a phone without cloud services or account signup. Serves files via HTTP with optional Ngrok tunneling for remote access.</p>
+
+                <h2 class="section-title">Tech Stack</h2>
+                <ul class="achievements">
+                    <li>Python 3.13</li>
+                    <li>http.server (built-in Python HTTP server)</li>
+                    <li>pyngrok (Ngrok tunnel for remote access)</li>
+                    <li>pyqrcode (QR code generation)</li>
+                </ul>
+
+                <h2 class="section-title">How It Works</h2>
+
+                <p>Four-step flow:</p>
+
+                <ul class="achievements">
+                    <li><strong>Configure</strong>: Specify the directory path and port number</li>
+                    <li><strong>Choose Access Mode</strong>: Local network (faster) or Ngrok tunnel (remote access from anywhere)</li>
+                    <li><strong>Server Starts</strong>: HTTP server begins serving files from the specified directory</li>
+                    <li><strong>Connect</strong>: Scan the QR code saved to your desktop or paste the URL into any browser</li>
+                </ul>
+
+                <h2 class="section-title">Features</h2>
+
+                <ul class="achievements">
+                    <li>Serves files from any directory via HTTP server on a user-defined port</li>
+                    <li>Supports local network access (fast, private) or remote access via Ngrok tunnel</li>
+                    <li>Generates QR code for instant mobile device access</li>
+                    <li>No account creation or cloud storage required</li>
+                </ul>
+
+                <h2 class="section-title">Project Motivation</h2>
+
+                <p>Built as a quick way to transfer files between devices without relying on cloud services, email attachments, or third-party apps.</p>
+
+                <p style="margin-top: var(--spacing-lg);">
+                    <a href="https://github.com/olivershackley1999/file-sharing-app" target="_blank" rel="noopener noreferrer" class="project-link">View on GitHub</a>
+                </p>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+            // On load, set theme from localStorage or system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>

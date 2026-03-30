@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investor Sentiment Analysis Pipeline</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="name">Investor Sentiment Analysis Pipeline</h1>
+            <p class="title">Multi-Service Azure Pipeline for Earnings Call Analysis</p>
+        </header>
+
+        <!-- Project Content -->
+        <section class="section">
+            <div class="project-content">
+                <p>An automated pipeline that analyzes earnings call transcripts and extracts investment sentiment. It uses Azure Language Service for NLP and Azure AI Foundry for synthesis, producing executive summaries of investment risks and sentiment trends over time.</p>
+
+                <h2 class="section-title">Tech Stack</h2>
+                <ul class="achievements">
+                    <li>Python</li>
+                    <li>Azure Language Service</li>
+                    <li>Azure AI Foundry (Kimi-K2 Thinking)</li>
+                    <li>Streamlit</li>
+                </ul>
+
+                <h2 class="section-title">How It Works</h2>
+
+                <p>The pipeline runs in five stages:</p>
+
+                <ul class="achievements">
+                    <li><strong>Input Processing</strong>: Accepts transcripts in .txt, .pdf, or .docx format</li>
+                    <li><strong>Language Analysis</strong>: Azure Language Service performs sentiment analysis, key phrase extraction, and summarization</li>
+                    <li><strong>Data Structuring</strong>: Results saved as JSON</li>
+                    <li><strong>AI Synthesis</strong>: Kimi-K2 Thinking applies deeper analysis with a detailed system prompt</li>
+                    <li><strong>Report Generation</strong>: Markdown output with sentiment analysis and investment insights</li>
+                </ul>
+
+                <div style="margin: 2rem 0; text-align: center;">
+                    <img src="../assets/images/sentiment-analysis-json.png"
+                         alt="JSON output from Azure Language Service"
+                         style="width: 85%; max-width: 750px; border: 1px solid var(--color-border); border-radius: 4px;">
+                </div>
+
+                <h2 class="section-title">Demos</h2>
+
+                <p>Terminal demo:</p>
+
+                <div class="video-container" style="margin: 2rem 0; text-align: center;">
+                    <video width="85%" style="max-width: 750px; border: 1px solid var(--color-border);" controls>
+                        <source src="../assets/videos/sentiment-terminal-demo.mov" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <p>Streamlit interface for uploading transcripts and viewing formatted reports:</p>
+
+                <div class="video-container" style="margin: 2rem 0; text-align: center;">
+                    <video width="85%" style="max-width: 750px; border: 1px solid var(--color-border);" controls>
+                        <source src="../assets/videos/sentiment-streamlit-demo.mov" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <h2 class="section-title">What I Learned</h2>
+
+                <p>This was my first time chaining multiple Azure services into one workflow. Azure Language Service handles the structured NLP tasks, Azure AI Foundry adds the analytical layer. Breaking complex analysis into discrete stages (text extraction, sentiment, key phrases, synthesis) made the pipeline easier to debug and maintain.</p>
+
+                <p>First time deploying to Streamlit too. It made it easy to turn a command-line tool into something non-technical users could actually use.</p>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+            // On load, set theme from localStorage or system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>

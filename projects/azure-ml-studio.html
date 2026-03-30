@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicting Flight Delays in Azure ML Studio</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="name">Predicting Flight Delays in Azure ML Studio</h1>
+            <p class="title">Building a Regression Model in Azure</p>
+        </header>
+
+        <!-- Project Content -->
+        <section class="section">
+            <div class="project-content">
+                <p>A Python utility for command-line interaction with Azure Machine Learning model endpoints. I built this as a testing interface for a flight delay prediction model trained with Azure's AutoML.</p>
+
+                <h2 class="section-title">Tech Stack</h2>
+                <ul class="achievements">
+                    <li>Python</li>
+                    <li>Azure ML Studio (AutoML)</li>
+                    <li>Requests library</li>
+                </ul>
+
+                <h2 class="section-title">How It Works</h2>
+
+                <p>AutoML handled feature engineering, algorithm selection, and hyperparameter tuning. I wrote a CLI tool to send prediction requests to the deployed endpoint with flight parameters (origin, destination, departure, arrival times) as arguments.</p>
+
+                <div class="video-container" style="margin: 2rem 0; text-align: center;">
+                    <video width="100%" max-width="800px" controls style="border: 1px solid var(--color-border);">
+                        <source src="Azure ML Studio Project/Azure ML Studio Project.mov" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <h2 class="section-title">Results</h2>
+
+                <ul class="achievements">
+                    <li><strong>R² Score:</strong> 0.80</li>
+                    <li><strong>Normalized RMSE:</strong> Under 0.1</li>
+                </ul>
+
+                <p>Solid first-pass results. The model captured most of the variance in the data and made consistent predictions across the range of values.</p>
+
+                <h2 class="section-title">What I Learned</h2>
+
+                <p>Compared to <a href="machine-learning-cats.html" class="project-link">building a model from scratch</a>, AutoML trades granular control for speed. It tested multiple algorithms and configurations in parallel and handled the infrastructure, so no GPU driver headaches like I had on Lambda Labs.</p>
+
+                <p>The inference script is on <a href="https://github.com/olivershackley1999/azure-ml-studio" target="_blank" rel="noopener noreferrer" class="project-link">my GitHub</a>.</p>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+            // On load, set theme from localStorage or system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>

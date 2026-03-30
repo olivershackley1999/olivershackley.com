@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects - Oliver Shackley</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header fade-in-element">
+            <h1 class="name">Projects</h1>
+            <div class="github-profile">
+                <p class="github-link">
+                    <span>View more on GitHub: </span>
+                    <a href="https://github.com/olivershackley1999" target="_blank" rel="noopener noreferrer" class="github-profile-link">
+                        github.com/olivershackley1999
+                    </a>
+                </p>
+            </div>
+        </header>
+
+        <!-- Projects Section -->
+        <section class="section fade-in-element">
+            <div class="projects-grid">
+                <!-- Project Card 1 -->
+                <a href="az-speech.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">Real-Time Call Analysis Dashboard</h3>
+                        <p class="project-card-description">Azure Speech-to-Text pipeline that streams audio transcription and uses an LLM to analyze call sentiment and provide detailed feedback reports.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Azure Speech</span>
+                            <span class="project-tag">LLM</span>
+                            <span class="project-tag">Streamlit</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 2 -->
+                <a href="investor-sentiment-analysis.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">Investor Sentiment Analysis Pipeline</h3>
+                        <p class="project-card-description">Automated pipeline for analyzing investor sentiment from earnings calls and financial documents.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">NLP</span>
+                            <span class="project-tag">Azure</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 3 -->
+                <a href="machine-learning-cats.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">Machine Learning with Cats</h3>
+                        <p class="project-card-description">Deep learning pipeline built with Claude Code to classify cat breeds using EfficientNetV2.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">PyTorch</span>
+                            <span class="project-tag">Computer Vision</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 4 -->
+                <a href="azure-ml-studio.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">Predicting Flight Delays</h3>
+                        <p class="project-card-description">Machine learning model built in Azure ML Studio to predict flight delays based on historical data.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Azure ML Studio</span>
+                            <span class="project-tag">Predictive Modeling</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 5 -->
+                <a href="personal-website.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">Personal Portfolio Website</h3>
+                        <p class="project-card-description">Custom-built portfolio website with AI-powered pitch generator and interactive map.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">HTML/CSS</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">Claude API</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 6 -->
+                <a href="file-sharing-app.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">File Sharing App</h3>
+                        <p class="project-card-description">Lightweight Python tool to access computer files from a phone without cloud services or account signup.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">HTTP Server</span>
+                            <span class="project-tag">Ngrok</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Project Card 7 -->
+                <a href="link-shortener.html" class="project-card-link">
+                    <div class="project-card">
+                        <h3 class="project-card-title">Containerized URL Shortener</h3>
+                        <p class="project-card-description">Multi-container Docker application that shortens URLs using three networked services: nginx reverse proxy, Flask backend, and PostgreSQL database.</p>
+                        <div class="project-card-tags">
+                            <span class="project-tag">Docker</span>
+                            <span class="project-tag">Docker Compose</span>
+                            <span class="project-tag">nginx</span>
+                            <span class="project-tag">Flask</span>
+                            <span class="project-tag">PostgreSQL</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Dark mode toggle
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+
+            // Scroll animation observer
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in-visible');
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.fade-in-element').forEach(element => {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Learning with Cats</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="name">Machine Learning with Cats</h1>
+            <p class="title">Training an ML Model</p>
+        </header>
+
+        <!-- Project Content -->
+        <section class="section">
+            <div class="project-content">
+                <p>I used Claude Code to build a deep learning pipeline to classify cat breeds using EfficientNetV2 with test-time augmentation. Separately, I trained the same dataset on Google Cloud Vertex AI AutoML to compare the two approaches. Dataset: Oxford Pet IIT, filtered to 12 cat breeds with ~200 images each.</p>
+
+                <h2 class="section-title">Tech Stack</h2>
+                <ul class="achievements">
+                    <li>Python, PyTorch, timm library</li>
+                    <li>EfficientNetV2-S (320px)</li>
+                    <li>Google Cloud Vertex AI</li>
+                    <li>Lambda Labs (GPU Compute)</li>
+                </ul>
+
+                <h2 class="section-title">Training Pipeline</h2>
+
+                <p>I used a two-phase training approach: freeze the backbone for initial epochs, then unfreeze for fine-tuning with discriminative learning rates. Early runs hit ~100% training accuracy but only 60-65% validation, a classic overfitting problem. I also ran into Lambda's missing Nvidia drivers, which kept the training falling back to CPU.</p>
+
+                <p>After fixing the drivers and adding regularization, the model improved significantly:</p>
+
+                <ul class="achievements">
+                    <li><strong>Label Smoothing</strong>: Softened targets to prevent overconfidence</li>
+                    <li><strong>Mixup/CutMix</strong>: Blended images and labels for better generalization</li>
+                    <li><strong>Cosine LR Schedule</strong>: Warmup plus cosine decay for stable training</li>
+                    <li><strong>EMA Weights</strong>: Averaged parameters over time for smoother convergence</li>
+                    <li><strong>Discriminative LR</strong>: Lower rates for pretrained backbone, higher for classifier head</li>
+                </ul>
+
+                <p>The biggest improvement came from switching to EfficientNetV2-S at 320px. Cat breed classification is a fine-grained task, so the higher resolution helped distinguish subtle differences between breeds.</p>
+
+                <div class="video-container" style="margin: 2rem 0; text-align: center;">
+                    <video width="50%" style="max-width: 400px; border: 1px solid var(--color-border);" controls>
+                        <source src="../assets/projects/wow-impressed-3x.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+
+                <h2 class="section-title">Results</h2>
+
+                <p>Final model: 95% macro F1 with strong balance across all 12 breeds. Test-time augmentation added an extra 1-3% accuracy boost. You can test the model yourself <a href="ml-inference.html" class="project-link">here</a>.</p>
+
+                <div class="image-container" style="margin: 2rem 0; text-align: center;">
+                    <img src="../assets/images/confusion_matrix_tta.png" alt="Confusion Matrix showing model performance across cat breeds" style="max-width: 100%; height: auto; border: 1px solid var(--color-border);">
+                </div>
+
+                <p>The Vertex AI AutoML model trained from scratch over 24 hours and also performed well:</p>
+
+                <ul class="achievements">
+                    <li><strong>PR AUC:</strong> 0.984</li>
+                    <li><strong>Precision:</strong> 97.3%</li>
+                    <li><strong>Recall:</strong> 90.7%</li>
+                </ul>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+            // On load, set theme from localStorage or system preference
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>
