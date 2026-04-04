@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploying a Static Site on Azure with Bicep IaC</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation Menu -->
+    <nav class="nav-menu">
+        <div class="nav-container">
+            <div class="toggle-container">
+                <button id="mode-toggle" aria-label="Toggle dark mode">
+                    <span id="mode-icon" aria-hidden="true">🌙</span>
+                    <span id="mode-label">Dark Mode</span>
+                </button>
+            </div>
+            <a href="/resume.html" class="nav-link">Resume</a>
+            <a href="/projects" class="nav-link">Projects</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1 class="name">Deploying a Static Site on Azure with Bicep IaC</h1>
+            <p class="title">Infrastructure as Code Deployment</p>
+        </header>
+
+        <!-- Project Content -->
+        <section class="section">
+            <div class="project-content">
+                <p>A Bicep template that provisions an Azure Storage Account with static website hosting enabled, then deploys a site to it.</p>
+
+                <h2 class="section-title">Why Infrastructure as Code</h2>
+                <p>My goal was to stop clicking through the Azure Portal and start defining infrastructure in a file that can be versioned, reviewed, and rerun, and a Bicep template enables just that.</p>
+
+                <h2 class="section-title">How It Works</h2>
+                <p>The template does three things:</p>
+
+                <ul class="achievements">
+                    <li><strong>Provisions a Storage Account</strong> -- Creates a StorageV2 account with Standard locally-redundant storage (LRS). The account name is generated dynamically using <code>uniqueString(resourceGroup().id)</code>, which helps produce a globally unique storage account without requiring manual naming.</li>
+                    <li><strong>Enables static website hosting</strong> -- The storage account is configured with public blob access, allowing Azure to serve HTML files directly from blob storage at a public URL.</li>
+                    <li><strong>Applies a delete lock</strong> -- A <code>CanNotDelete</code> authorization lock is scoped to the storage account. This prevents anyone (including the account owner) from accidentally deleting the resource without first removing the lock.</li>
+                </ul>
+
+                <h2 class="section-title">What I Learned</h2>
+                <ul class="achievements">
+                    <li><strong>Declarative vs. imperative</strong> -- Bicep templates describe what should exist, while Azure figures out the ordering and dependencies.</li>
+                    <li><strong>Idempotency</strong> -- Running the same Bicep file repeatedly is safe. If the resources already match the template, nothing changes. This makes redeployment a no-op rather than a risk.</li>
+                    <li><strong>Bicep building blocks</strong> -- Parameters for values that change between environments (like region), variables for computed values (like the storage account name), resource blocks that map directly to Azure resource types, and outputs that surface useful values like the deployed site URL.</li>
+                    <li><strong>Azure CLI</strong> -- Hands-on experience deploying and managing resources from the command line rather than through the portal.</li>
+                </ul>
+
+                <h2 class="section-title">Tech Stack</h2>
+                <ul class="achievements">
+                    <li>Azure Bicep (declarative infrastructure template)</li>
+                    <li>Azure Storage Account / Blob Storage (static site hosting)</li>
+                    <li>Azure CLI (deployment and resource management)</li>
+                    <li>Azure Authorization Locks (resource protection)</li>
+                </ul>
+
+                <p style="margin-top: var(--spacing-lg);">
+                    <a href="https://github.com/olivershackley1999/bicep-deployment" target="_blank" rel="noopener noreferrer" class="project-link">View on GitHub</a>
+                </p>
+
+            </div>
+        </section>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function setMode(isDark) {
+                if (isDark) {
+                    document.body.classList.add('dark-mode');
+                    document.getElementById('mode-icon').textContent = '☀️';
+                    document.getElementById('mode-label').textContent = 'Light Mode';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    document.getElementById('mode-icon').textContent = '🌙';
+                    document.getElementById('mode-label').textContent = 'Dark Mode';
+                }
+            }
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
+            setMode(isDark);
+            document.getElementById('mode-toggle').addEventListener('click', function() {
+                isDark = !document.body.classList.contains('dark-mode');
+                setMode(isDark);
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        });
+    </script>
+</body>
+</html>
