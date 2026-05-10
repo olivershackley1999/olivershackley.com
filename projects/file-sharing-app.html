@@ -3,102 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>File Sharing App</title>
+    <title>File Sharing App — Oliver Shackley</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Menu -->
-    <nav class="nav-menu">
-        <div class="nav-container">
-            <div class="toggle-container">
-                <button id="mode-toggle" aria-label="Toggle dark mode">
-                    <span id="mode-icon" aria-hidden="true">🌙</span>
-                    <span id="mode-label">Dark Mode</span>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../resume.html" class="brand">
+                <span class="brand-mark">os</span>
+                <span>Oliver Shackley</span>
+            </a>
+            <div class="nav-links">
+                <a href="../resume.html" class="nav-link">Resume</a>
+                <a href="index.html" class="nav-link active">Projects</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="icon-sun" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
                 </button>
             </div>
-            <a href="/resume.html" class="nav-link">Resume</a>
-            <a href="/projects" class="nav-link">Projects</a>
         </div>
     </nav>
 
-    <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1 class="name">File Sharing App</h1>
-            <p class="title">Local & Remote File Access Without Cloud Services</p>
-        </header>
+    <main>
+        <div class="container">
+            <div class="article-wrap">
 
-        <!-- Project Content -->
-        <section class="section">
-            <div class="project-content">
-                <p>A lightweight Python tool to access computer files from a phone without cloud services or account signup. Serves files via HTTP with optional Ngrok tunneling for remote access.</p>
+                <a href="index.html" class="back-link">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                    All projects
+                </a>
 
-                <h2 class="section-title">Tech Stack</h2>
-                <ul class="achievements">
-                    <li>Python 3.13</li>
-                    <li>http.server (built-in Python HTTP server)</li>
-                    <li>pyngrok (Ngrok tunnel for remote access)</li>
-                    <li>pyqrcode (QR code generation)</li>
-                </ul>
+                <article>
+                    <header class="article-header">
+                        <div class="eyebrow">Tools</div>
+                        <h1>File Sharing App</h1>
+                        <p class="kicker">Lightweight Python tool to access computer files from a phone over local network or Ngrok tunnel — no cloud services, no account signup.</p>
+                        <div class="article-meta">
+                            <div class="tag-row">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">HTTP Server</span>
+                                <span class="project-tag">Ngrok</span>
+                                <span class="project-tag">QR</span>
+                            </div>
+                            <a href="https://github.com/olivershackley1999/file-sharing-app" target="_blank" rel="noopener noreferrer" class="github-link">
+                                <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+                                <span>Source on GitHub</span>
+                                <svg class="arrow" viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5L12.5 8 9 11.5"/></svg>
+                            </a>
+                        </div>
+                    </header>
 
-                <h2 class="section-title">How It Works</h2>
+                    <div class="article-body">
+                        <div class="disclaimer">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/><path d="m15 5 4 4"/></svg>
+                            <span><strong>Hand-written.</strong> All code and content in this project was written by me.</span>
+                        </div>
 
-                <p>Four-step flow:</p>
+                        <p>A lightweight Python tool to access computer files from a phone without cloud services or account signup. Serves files via HTTP with optional Ngrok tunneling for remote access.</p>
 
-                <ul class="achievements">
-                    <li><strong>Configure</strong>: Specify the directory path and port number</li>
-                    <li><strong>Choose Access Mode</strong>: Local network (faster) or Ngrok tunnel (remote access from anywhere)</li>
-                    <li><strong>Server Starts</strong>: HTTP server begins serving files from the specified directory</li>
-                    <li><strong>Connect</strong>: Scan the QR code saved to your desktop or paste the URL into any browser</li>
-                </ul>
+                        <h2>How it works</h2>
+                        <p>Four-step flow:</p>
+                        <ul>
+                            <li><strong>Configure.</strong> Specify the directory path and port number.</li>
+                            <li><strong>Choose access mode.</strong> Local network (faster) or Ngrok tunnel (remote access from anywhere).</li>
+                            <li><strong>Server starts.</strong> HTTP server begins serving files from the specified directory.</li>
+                            <li><strong>Connect.</strong> Scan the QR code saved to your desktop or paste the URL into any browser.</li>
+                        </ul>
 
-                <h2 class="section-title">Features</h2>
+                        <h2>Features</h2>
+                        <ul>
+                            <li>Serves files from any directory via HTTP server on a user-defined port.</li>
+                            <li>Supports local network access (fast, private) or remote access via Ngrok tunnel.</li>
+                            <li>Generates a QR code for instant mobile device access.</li>
+                            <li>No account creation or cloud storage required.</li>
+                        </ul>
 
-                <ul class="achievements">
-                    <li>Serves files from any directory via HTTP server on a user-defined port</li>
-                    <li>Supports local network access (fast, private) or remote access via Ngrok tunnel</li>
-                    <li>Generates QR code for instant mobile device access</li>
-                    <li>No account creation or cloud storage required</li>
-                </ul>
+                        <h2>Why I built it</h2>
+                        <p>A quick way to transfer files between devices without relying on cloud services, email attachments, or third-party apps.</p>
 
-                <h2 class="section-title">Project Motivation</h2>
+                        <div class="stack-card">
+                            <h2>Tech stack</h2>
+                            <ul>
+                                <li>Python 3.13</li>
+                                <li><code>http.server</code> — built-in Python HTTP server</li>
+                                <li><code>pyngrok</code> — Ngrok tunnel for remote access</li>
+                                <li><code>pyqrcode</code> — QR code generation</li>
+                            </ul>
+                        </div>
+                    </div>
 
-                <p>Built as a quick way to transfer files between devices without relying on cloud services, email attachments, or third-party apps.</p>
-
-                <p style="margin-top: var(--spacing-lg);">
-                    <a href="https://github.com/olivershackley1999/file-sharing-app" target="_blank" rel="noopener noreferrer" class="project-link">View on GitHub</a>
-                </p>
+                    <footer class="article-footer">
+                        <a href="index.html" class="back-link">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                            All projects
+                        </a>
+                        <a href="https://github.com/olivershackley1999/file-sharing-app" target="_blank" rel="noopener noreferrer" class="github-link">
+                            <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+                            <span>Source on GitHub</span>
+                            <svg class="arrow" viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5L12.5 8 9 11.5"/></svg>
+                        </a>
+                    </footer>
+                </article>
 
             </div>
-        </section>
-    </div>
+        </div>
+    </main>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            function setMode(isDark) {
-                if (isDark) {
-                    document.body.classList.add('dark-mode');
-                    document.getElementById('mode-icon').textContent = '☀️';
-                    document.getElementById('mode-label').textContent = 'Light Mode';
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    document.getElementById('mode-icon').textContent = '🌙';
-                    document.getElementById('mode-label').textContent = 'Dark Mode';
-                }
-            }
-            // On load, set theme from localStorage or system preference
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
-            setMode(isDark);
-            document.getElementById('mode-toggle').addEventListener('click', function() {
-                isDark = !document.body.classList.contains('dark-mode');
-                setMode(isDark);
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            });
-        });
-    </script>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>© 2026 Oliver Shackley</div>
+                <div>Built in Seattle, WA</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../app.js"></script>
 </body>
 </html>

@@ -3,68 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Breed Classifier</title>
+    <title>Cat Breed Classifier — Oliver Shackley</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Menu -->
-    <nav class="nav-menu">
-        <div class="nav-container">
-            <div class="toggle-container">
-                <button id="mode-toggle" aria-label="Toggle dark mode">
-                    <span id="mode-icon" aria-hidden="true">🌙</span>
-                    <span id="mode-label">Dark Mode</span>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../resume.html" class="brand">
+                <span class="brand-mark">os</span>
+                <span>Oliver Shackley</span>
+            </a>
+            <div class="nav-links">
+                <a href="../resume.html" class="nav-link">Resume</a>
+                <a href="index.html" class="nav-link active">Projects</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="icon-sun" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
                 </button>
             </div>
-            <a href="/resume.html" class="nav-link">Resume</a>
-            <a href="/projects" class="nav-link">Projects</a>
         </div>
     </nav>
 
-    <div class="container">
-        <!-- Header Section -->
-        <header class="header">
-            <h1 class="name">Cat Breed Classifier</h1>
-            <p class="title">Interactive Machine Learning Model</p>
-        </header>
+    <main>
+        <div class="container">
+            <div class="article-wrap">
 
-        <!-- Main Inference Area -->
-        <section class="section inference-section">
-            <div id="inference-placeholder" class="inference-placeholder">
-                <p>Select a cat from the grid below</p>
-            </div>
-            <div id="inference-results" class="inference-results" style="display: none;">
-                <div class="selected-image-container">
-                    <img id="selectedImage" alt="Selected cat image" class="selected-image">
+                <a href="machine-learning-cats.html" class="back-link">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                    Back to case study
+                </a>
+
+                <header class="article-header">
+                    <div class="eyebrow">Interactive Demo</div>
+                    <h1>Cat Breed Classifier</h1>
+                    <p class="kicker">Click any cat below to see how the model classifies its breed and how confident it is in each prediction.</p>
+                    <div class="article-meta">
+                        <div class="tag-row">
+                            <span class="project-tag">PyTorch</span>
+                            <span class="project-tag">Computer Vision</span>
+                            <span class="project-tag">Demo</span>
+                        </div>
+                    </div>
+                </header>
+
+                <div class="disclaimer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2 2-6z"/></svg>
+                    <span><strong>Built with AI.</strong> The code in this project was written by Claude Code.</span>
                 </div>
-                <div class="predictions-container">
-                    <h3 class="prediction-title">Model Predictions</h3>
-                    <div id="predictionsList" class="predictions-list">
-                        <!-- Predictions will be populated by JavaScript -->
+
+                <div class="inference-wrap">
+                    <div id="inference-placeholder" class="inference-placeholder">
+                        <p>Select a cat from the grid below</p>
+                    </div>
+                    <div id="inference-results" class="inference-results" style="display: none;">
+                        <div class="selected-image-container">
+                            <img id="selectedImage" alt="Selected cat image" class="selected-image">
+                        </div>
+                        <div class="predictions-container">
+                            <h3 class="prediction-title">Model Predictions</h3>
+                            <div id="predictionsList" class="predictions-list">
+                                <!-- Predictions populated by JavaScript -->
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Sample Images Grid -->
-        <section class="section">
-            <h2 class="section-title">Sample Images</h2>
-            <div class="compact-image-grid" id="imageGrid">
-                <!-- Images will be populated by JavaScript -->
-            </div>
-        </section>
-    </div>
+                <div class="article-body">
+                    <h2>Sample Images</h2>
+                    <div class="compact-image-grid" id="imageGrid">
+                        <!-- Images populated by JavaScript -->
+                    </div>
+                </div>
 
+                <footer class="article-footer">
+                    <a href="machine-learning-cats.html" class="back-link">
+                        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                        Back to case study
+                    </a>
+                </footer>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>© 2026 Oliver Shackley</div>
+                <div>Built in Seattle, WA</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../app.js"></script>
     <script>
-        // Cat breeds and sample data (using available images)
-        const breeds = [
-            'Abyssinian', 'Bengal', 'Birman', 'Bombay', 'Persian', 'Ragdoll', 'Siamese', 'Sphynx'
-        ];
+        const breeds = ['Abyssinian', 'Bengal', 'Birman', 'Bombay', 'Persian', 'Ragdoll', 'Siamese', 'Sphynx'];
 
-        // All 36 sample images for 4x9 grid
         const sampleImages = [
             'Abyssinian_1.jpg', 'Abyssinian_2.jpg', 'Abyssinian_3.jpg', 'Abyssinian_4.jpg', 'Abyssinian_5.jpg',
             'Bengal_1.jpg', 'Bengal_2.jpg', 'Bengal_3.jpg', 'Bengal_4.jpg', 'Bengal_5.jpg',
@@ -75,135 +113,85 @@
             'Siamese_5.jpg', 'Sphynx_1.jpg', 'Sphynx_2.jpg', 'Sphynx_3.jpg', 'Sphynx_4.jpg', 'Sphynx_5.jpg'
         ];
 
-        // Simulate ML model predictions
         function generatePredictions(imageName) {
             const actualBreed = imageName.split('_')[0];
             const predictions = {};
-
-            // Generate realistic predictions
             breeds.forEach(breed => {
                 if (breed === actualBreed) {
-                    // High confidence for correct breed (85-95%)
                     predictions[breed] = 0.85 + Math.random() * 0.10;
                 } else {
-                    // Lower confidence for other breeds
                     predictions[breed] = Math.random() * 0.15;
                 }
             });
-
-            // Normalize predictions to sum to 1
             const total = Object.values(predictions).reduce((a, b) => a + b, 0);
             Object.keys(predictions).forEach(breed => {
                 predictions[breed] = predictions[breed] / total;
             });
-
-            // Sort by confidence
             return Object.entries(predictions)
                 .sort(([,a], [,b]) => b - a)
                 .map(([breed, confidence]) => ({breed, confidence}));
         }
 
-        // Create compact image grid
         function createImageGrid() {
             const grid = document.getElementById('imageGrid');
-
             sampleImages.forEach(imageName => {
-                const imageContainer = document.createElement('div');
-                imageContainer.className = 'compact-image-item';
-
+                const item = document.createElement('div');
+                item.className = 'compact-image-item';
                 const img = document.createElement('img');
                 img.src = `assets/ml-samples/${imageName}`;
                 img.alt = imageName.split('_')[0];
                 img.className = 'compact-sample-image';
                 img.onclick = () => classifyImage(imageName, img.src);
-
-                imageContainer.appendChild(img);
-                grid.appendChild(imageContainer);
+                item.appendChild(img);
+                grid.appendChild(item);
             });
         }
 
-        // Classify selected image
         function classifyImage(imageName, imageSrc) {
             const predictions = generatePredictions(imageName);
             const actualBreed = imageName.split('_')[0];
 
-            // Hide placeholder and show results
             document.getElementById('inference-placeholder').style.display = 'none';
-            document.getElementById('inference-results').style.display = 'block';
+            document.getElementById('inference-results').style.display = 'grid';
 
-            // Show selected image
             const selectedImg = document.getElementById('selectedImage');
             selectedImg.src = imageSrc;
             selectedImg.alt = imageName;
 
-            // Show predictions with actual answer highlight
-            const predictionsList = document.getElementById('predictionsList');
-            predictionsList.innerHTML = '';
+            const list = document.getElementById('predictionsList');
+            list.innerHTML = '';
 
-            // Add actual answer indicator first
             const actualAnswer = document.createElement('div');
             actualAnswer.className = 'actual-answer';
-            actualAnswer.innerHTML = `<strong>Actual Breed: ${actualBreed}</strong>`;
-            predictionsList.appendChild(actualAnswer);
+            actualAnswer.innerHTML = `<strong>Actual breed: ${actualBreed}</strong>`;
+            list.appendChild(actualAnswer);
 
-            predictions.forEach((prediction, index) => {
-                const predictionItem = document.createElement('div');
-                predictionItem.className = 'prediction-item';
-
-                // Highlight if this is the correct answer
+            predictions.forEach(prediction => {
+                const item = document.createElement('div');
+                item.className = 'prediction-item';
                 if (prediction.breed === actualBreed) {
-                    predictionItem.classList.add('correct-answer');
+                    item.classList.add('correct-answer');
                 }
-
                 const breed = document.createElement('span');
                 breed.className = 'breed-name';
                 breed.textContent = prediction.breed;
-
                 const confidence = document.createElement('span');
                 confidence.className = 'confidence-score';
                 confidence.textContent = `${(prediction.confidence * 100).toFixed(1)}%`;
-
                 const bar = document.createElement('div');
                 bar.className = 'confidence-bar';
                 const fill = document.createElement('div');
                 fill.className = 'confidence-fill';
                 fill.style.width = `${prediction.confidence * 100}%`;
                 bar.appendChild(fill);
-
-                predictionItem.appendChild(breed);
-                predictionItem.appendChild(confidence);
-                predictionItem.appendChild(bar);
-                predictionsList.appendChild(predictionItem);
+                item.appendChild(breed);
+                item.appendChild(confidence);
+                item.appendChild(bar);
+                list.appendChild(item);
             });
         }
 
-        // Dark mode functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            function setMode(isDark) {
-                if (isDark) {
-                    document.body.classList.add('dark-mode');
-                    document.getElementById('mode-icon').textContent = '☀️';
-                    document.getElementById('mode-label').textContent = 'Light Mode';
-                } else {
-                    document.body.classList.remove('dark-mode');
-                    document.getElementById('mode-icon').textContent = '🌙';
-                    document.getElementById('mode-label').textContent = 'Dark Mode';
-                }
-            }
-
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            let isDark = localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && prefersDark);
-            setMode(isDark);
-
-            document.getElementById('mode-toggle').addEventListener('click', function() {
-                isDark = !document.body.classList.contains('dark-mode');
-                setMode(isDark);
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            });
-
-            // Initialize image grid
-            createImageGrid();
-        });
+        document.addEventListener('DOMContentLoaded', createImageGrid);
     </script>
 </body>
 </html>
