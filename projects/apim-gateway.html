@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An AI Gateway with Azure API Management — Oliver Shackley</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../resume.html" class="brand">
+                <span class="brand-mark">os</span>
+                <span>Oliver Shackley</span>
+            </a>
+            <div class="nav-links">
+                <a href="../resume.html" class="nav-link">Resume</a>
+                <a href="index.html" class="nav-link active">Projects</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="icon-sun" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="article-wrap">
+
+                <a href="index.html" class="back-link">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                    All projects
+                </a>
+
+                <article>
+                    <header class="article-header">
+                        <div class="eyebrow">Cloud / AI Infrastructure</div>
+                        <h1>An AI Gateway with Azure API Management</h1>
+                        <p class="kicker">Azure API Management placed in front of Azure OpenAI, so every call to the AI model goes through one controlled front door with its own keys, usage limits, and caching.</p>
+                        <div class="article-meta">
+                            <div class="tag-row">
+                                <span class="project-tag">Azure API Management</span>
+                                <span class="project-tag">Azure OpenAI</span>
+                                <span class="project-tag">Bicep</span>
+                                <span class="project-tag">Managed Identity</span>
+                            </div>
+                            <a href="https://github.com/olivershackley1999/apim-project" target="_blank" rel="noopener noreferrer" class="github-link">
+                                <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+                                <span>Source on GitHub</span>
+                                <svg class="arrow" viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5L12.5 8 9 11.5"/></svg>
+                            </a>
+                        </div>
+                    </header>
+
+                    <div class="article-body">
+                        <div class="disclaimer">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/><path d="m15 5 4 4"/></svg>
+                            <span><strong>Built with AI.</strong> The code in this project was written by Claude Code.</span>
+                        </div>
+
+                        <h2>The problem</h2>
+                        <p>Giving an app direct access to an AI model means handing it a key and hoping for the best. There is no easy way to see who is calling, to stop one client running up the bill, or to avoid paying twice for the same answer. I wanted a single front door that solves all three.</p>
+
+                        <h2>How it works</h2>
+                        <p>Clients talk to a gateway, and the gateway talks to the model. Because every request passes through one place, three things become possible:</p>
+                        <ul>
+                            <li><strong>Keys you can revoke.</strong> Each client gets its own subscription key. The real connection to the model stays with the gateway, so the model's own credentials never leave Azure.</li>
+                            <li><strong>Per-client usage limits.</strong> A free tier is capped at 500 tokens per minute and a premium tier at 100,000. The same burst of traffic clears on premium and gets throttled on free.</li>
+                            <li><strong>Caching.</strong> If the exact same question is asked twice, the second answer comes straight from the gateway's memory, with no second call to the model and no second charge.</li>
+                        </ul>
+
+                        <h2>Keyless access to the model</h2>
+                        <p>The client only ever holds an API Management subscription key. The gateway authenticates to Azure OpenAI using a managed identity, which is an identity Azure manages on the gateway's behalf. No model key is ever written into a script or shared with a client.</p>
+                        <figure class="screenshot">
+                            <img src="../assets/images/apim-gateway-managed-identity.png" alt="The gateway's managed identity granted access to Azure OpenAI in the Azure portal">
+                        </figure>
+
+                        <h2>Seeing it work</h2>
+                        <p>A small test script fires the same burst of requests at both tiers, then sends one prompt twice. The free tier clears a couple of calls and then starts returning 429 (too many requests), the premium tier clears all of them, and the repeated prompt comes back from the cache the second time it is asked.</p>
+                        <figure class="screenshot">
+                            <img src="../assets/images/apim-gateway-demo.png" alt="Test script output showing the free tier throttling, the premium tier clearing, and a cache hit">
+                        </figure>
+
+                        <h2>What I learned</h2>
+                        <ul>
+                            <li><strong>The gateway is the control point.</strong> Putting keys, rate limits, and caching in one layer means the model behind it stays simple and the clients in front of it stay dumb.</li>
+                            <li><strong>Managed identity removes secrets.</strong> Once the gateway has its own identity, there is no model key to leak, rotate, or accidentally commit.</li>
+                            <li><strong>Token limits run per subscription.</strong> Keying the limit on the subscription means one tier's traffic never eats into another's budget.</li>
+                        </ul>
+
+                        <div class="stack-card">
+                            <h2>Tech stack</h2>
+                            <ul>
+                                <li>Azure API Management — the gateway that checks keys, enforces limits, and runs the cache</li>
+                                <li>Azure OpenAI — the service hosting the model that answers requests</li>
+                                <li>Bicep — declarative template for provisioning the gateway</li>
+                                <li>Managed identity — keyless authentication from the gateway to the model</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <footer class="article-footer">
+                        <a href="index.html" class="back-link">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                            All projects
+                        </a>
+                        <a href="https://github.com/olivershackley1999/apim-project" target="_blank" rel="noopener noreferrer" class="github-link">
+                            <svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.3.5-2.4 1.2-3.2-.1-.3-.5-1.5.1-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.7 1.7.2 2.9.1 3.2.8.8 1.2 1.9 1.2 3.2 0 4.6-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3"/></svg>
+                            <span>Source on GitHub</span>
+                            <svg class="arrow" viewBox="0 0 16 16"><path d="M3.5 8h9M9 4.5L12.5 8 9 11.5"/></svg>
+                        </a>
+                    </footer>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>© 2026 Oliver Shackley</div>
+                <div>Built in Seattle, WA</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../app.js"></script>
+</body>
+</html>
