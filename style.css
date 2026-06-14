@@ -817,6 +817,23 @@ body.dark-mode .exp-logo { background: #fff; }
     border-radius: 5px;
     color: var(--text);
 }
+.article-body pre {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    line-height: 1.6;
+    padding: 16px 18px;
+    margin: 22px 0;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+}
+.article-body pre code {
+    padding: 0;
+    background: none;
+    border-radius: 0;
+    font-size: inherit;
+}
 .article-body figure {
     margin: 32px 0;
     text-align: center;
@@ -828,6 +845,11 @@ body.dark-mode .exp-logo { background: #fff; }
     border-radius: var(--radius-md);
     border: 1px solid var(--border);
     background: var(--surface);
+}
+.article-body figure.screenshot {
+    max-width: 715px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .article-body figcaption {
     font-size: 13px;

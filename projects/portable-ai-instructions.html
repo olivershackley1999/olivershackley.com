@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write Your AI Instructions Once, Use Them Everywhere — Oliver Shackley</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../resume.html" class="brand">
+                <span class="brand-mark">os</span>
+                <span>Oliver Shackley</span>
+            </a>
+            <div class="nav-links">
+                <a href="../resume.html" class="nav-link">Resume</a>
+                <a href="index.html" class="nav-link active">Projects</a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+                    <svg id="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                    <svg id="icon-sun" style="display:none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="article-wrap">
+
+                <a href="index.html" class="back-link">
+                    <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                    All projects
+                </a>
+
+                <article>
+                    <header class="article-header">
+                        <div class="eyebrow">Personal Tooling</div>
+                        <h1>Write Your AI Instructions Once, Use Them Everywhere</h1>
+                        <p class="kicker">One version-controlled source of truth for the personal instructions I give every AI tool, built out to each one so nothing drifts.</p>
+                        <div class="article-meta">
+                            <div class="tag-row">
+                                <span class="project-tag">Config</span>
+                                <span class="project-tag">Markdown</span>
+                                <span class="project-tag">Bash</span>
+                                <span class="project-tag">Git</span>
+                            </div>
+                        </div>
+                    </header>
+
+                    <div class="article-body">
+                        <h2>The problem</h2>
+                        <p>I use quite a few AI tools, both personally and at work. Every one of them has a box where I tell it how I want to be treated, things like who I am, how I like things explained, and what I want it to stop doing. Each tool keeps its own copy, so the same few paragraphs about how I learn live in a dozen different places. Maintained by hand, those copies drift. I change my mind about something, fix it in one or two places, and forget the rest, until three tools believe three slightly different things about me.</p>
+                        <p>Developers solved a version of this years ago with dotfiles. You keep your shell and editor preferences in one version-controlled folder and let every machine build itself from that single source. My instructions are the same type of problem, one layer up. Instead of carrying config between machines I am carrying it between AI tools, so I used the same playbook.</p>
+
+                        <h2>How it works</h2>
+                        <p>There is one folder I edit, called <code>core</code>. It holds plain Markdown files, one topic per file. Who I am lives in <code>identity.md</code>, how I like things explained lives in <code>learning.md</code>, and what I am working toward lives in <code>goals.md</code>. Each file is hand-written and tool-agnostic, so nothing in it knows which AI is going to read it. That folder is the only thing I ever touch.</p>
+                        <p>A build script turns those notes into something each tool can read. The core of it is barely more than a few <code>cat</code> commands. Each line names the chunks a given tool gets and the file they get written to, then concatenates them in order into a <code>targets</code> folder.</p>
+                        <pre><code>cat core/identity.md core/learning.md core/goals.md &gt; targets/claude-desktop.md
+cat core/identity.md core/learning.md &gt; targets/copilot.md</code></pre>
+                        <p>Add a tool and I add a line. Change my mind about what a tool should know and I change which files sit on that line. The logic for who gets what lives in the script instead of in my head.</p>
+                        <p>The flow only ever runs one way. I edit <code>core</code>, run the build, and <code>targets</code> updates. If I deleted the entire <code>targets</code> folder it would not matter, because the next build just makes it again.</p>
+
+                        <h2>Two kinds of target</h2>
+                        <ul>
+                            <li><strong>File-backed tools</strong> read a config file straight from disk, like Claude Code reading a <code>CLAUDE.md</code>. The script writes the file right to where the tool looks for it, so the build finishes and the tool is already updated.</li>
+                            <li><strong>UI-backed tools</strong> have no file to write. Their config lives in a settings box on a website, like the custom instructions field in Claude Desktop. The script still assembles the exact text, but it cannot reach into a web form and paste for me, so that last step stays manual where I copy the finished block and paste it in.</li>
+                        </ul>
+                        <p>I work from more than one machine, so the source of truth has to travel with me. A private git repository is the hub and each machine holds its own clone. The <code>targets</code> folder is also git-ignored, so the generated output never gets committed.</p>
+
+                        <h2>What I learned</h2>
+                        <p>I had treated the instructions I hand an AI like throwaway text, retyped for each tool and left to drift. The moment I started treating them like infrastructure with version-control, built from one source, and deployed everywhere, the drift stopped.</p>
+
+                        <div class="stack-card">
+                            <h2>Tech stack</h2>
+                            <ul>
+                                <li>Markdown — the hand-authored, tool-agnostic source chunks</li>
+                                <li>Bash — the build script that concatenates chunks into per-tool files</li>
+                                <li>Git — a private hub-and-spoke repo that syncs the source across machines</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <footer class="article-footer">
+                        <a href="index.html" class="back-link">
+                            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 8h-9M7 4.5L3.5 8 7 11.5"/></svg>
+                            All projects
+                        </a>
+                    </footer>
+                </article>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div>© 2026 Oliver Shackley</div>
+                <div>Built in Seattle, WA</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../app.js"></script>
+</body>
+</html>
